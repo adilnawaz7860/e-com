@@ -119,7 +119,7 @@ const [filters, setFilters] = useState({ categories: [] });
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="text-2xl font-bold text-cyan-400">
-          ElectroStore
+          IT Solutions.
         </Link>
 
         {/* Search Bar */}

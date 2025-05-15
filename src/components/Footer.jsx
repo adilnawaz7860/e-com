@@ -23,7 +23,7 @@ export default function Footer() {
         <div className="container mx-auto px-4 py-10 grid md:grid-cols-3 gap-8">
           {/* About */}
           <div>
-            <h3 className="text-lg font-semibold mb-2">About ElectroStore</h3>
+            <h3 className="text-lg font-semibold mb-2">About  IT Solutions.</h3>
             <p className="text-sm text-gray-400">
               The latest gadgets at unbeatable prices.
             </p>
@@ -55,7 +55,7 @@ export default function Footer() {
         </div>
 
         <div className="text-center text-xs text-gray-500 py-4 border-t border-gray-700">
-          © {new Date().getFullYear()} ElectroStore. All rights reserved.
+          © {new Date().getFullYear()}   IT Solutions. All rights reserved.
         </div>
       </motion.footer>
   );
