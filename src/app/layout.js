@@ -28,25 +28,10 @@ const [cartOpen, setCartOpen] = useState(false);
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-       <Header setCartOpen={setCartOpen} />
-      <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+    
         {children}
-        <Footer />
-<Toaster
-  position="top-left"
-  richColors
-  duration={3000}
-  
-  expand={true}
-  offset={16}
-  toastOptions={{
-    classNames: {
-      toast: 'shadow-lg border border-gray-200 dark:border-gray-700',
-      title: 'font-semibold text-base',
-      description: 'text-sm text-gray-500 dark:text-gray-400',
-    },
-  }}
-/>
+   
+
       </body>
     </html>
   );

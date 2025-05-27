@@ -64,7 +64,7 @@ import Link from "next/link";
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full h-[90vh] bg-gradient-to-r from-black via-gray-900 to-black overflow-hidden">
+    <section className="relative w-[50%] md:w-full h-[90vh] bg-gradient-to-r from-black via-gray-900 to-black overflow-hidden">
       <div className="absolute inset-0 z-0">
         <img
           src="https://img.freepik.com/premium-vector/discount-sale-promotion-event-horizontal-banner_554907-284.jpg" // optional background image

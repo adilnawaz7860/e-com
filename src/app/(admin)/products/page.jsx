@@ -1,20 +1,30 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductCard from '@/components/ProductCard';
-import { accessories } from '@/data/accessorees';
+import AdminService from '@/services/adminService';
 
 const ProductsPage = () => {
+  const [products ,setProducts] = useState([]);
  const [filters, setFilters] = useState({
   categories: [], // now an array
   priceSort: '',  // 'low-high' or 'high-low'
 });
 
+  const getProducts = async () => {
+  const res = await AdminService.getAllProducts();
+  setProducts(res ?? [])
+}
+
+useEffect(() => {
+  getProducts()
+},[])
+
 
   // Get unique categories
-  const categories = [...new Set(accessories.map(product => product.category))];
+  const categories = [...new Set(products.map(product => product.category))];
 
   // Filter and sort products
- const filteredProducts = accessories
+ const filteredProducts = products
   .filter(product =>
     filters?.categories?.length === 0 || filters?.categories?.includes(product.category)
   )
@@ -141,7 +151,7 @@ const ProductsPage = () => {
         {filteredProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {filteredProducts.map(product => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product._id} product={product} />
             ))}
           </div>
         ) : (
@@ -149,7 +159,7 @@ const ProductsPage = () => {
             <p className="text-gray-500">No products match your filters.</p>
             <button
               onClick={clearFilters}
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              className="mt-4 px-4 py-2 bg-cyan-500 text-white rounded hover:bg-cyan-600"
             >
               Clear Filters
             </button>

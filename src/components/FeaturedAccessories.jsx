@@ -2,6 +2,12 @@
 "use client";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
+import AdminService from "@/services/adminService";
+import { useEffect, useState } from "react";
+
+
+
+
 
 const accessories = [
   {
@@ -131,11 +137,21 @@ const accessories = [
 ];
 
 export default function FeaturedAccessories() {
+  const [products ,setProducts] = useState([]);
+
+  const getProducts = async () => {
+  const res = await AdminService.getAllProducts();
+  setProducts(res ?? [])
+}
+
+useEffect(() => {
+  getProducts()
+},[])
   return (
     <section className="py-12">
       <h2 className="text-3xl font-bold text-center mb-10">Featured Accessories</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-6">
-        {accessories.map(product => (
+        {products.map(product => (
            <ProductCard key={product.id} product={product} />
           
         ))}

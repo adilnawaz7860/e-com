@@ -15,7 +15,7 @@ addToCart: (product) => {
   const quantityToAdd = Math.max(product.quantity || 1, 1);
   
   // Check if product exists in cart
-  const existingItemIndex = currentCart.findIndex(item => item.id === product.id);
+  const existingItemIndex = currentCart.findIndex(item => item._id === product._id);
 
   let updatedCart;
   
@@ -38,7 +38,7 @@ addToCart: (product) => {
         ...product, 
         quantity: quantityToAdd,
         // Ensure minimum required fields
-        id: product.id, // Required
+        id: product._id, // Required
         price: product.price, // Required
         name: product.name || 'Unnamed Product' // Recommended
       }
@@ -59,7 +59,7 @@ addToCart: (product) => {
 
 
     removeFromCart: (id) => {
-      const cart = get().cart.filter(item => item.id !== id);
+      const cart = get().cart.filter(item => item._id !== id);
       set({ cart });
       
       // Save cart to localStorage after removing

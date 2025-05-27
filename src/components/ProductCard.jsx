@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
   const addToCart = useCartStore(state => state.addToCart);
   const items = useCartStore(state => state.cart);
 
-  const isInCart = items.some(item => item.id === product.id);
+  const isInCart = items.some(item => item._id === product._id);
 
   const handleAddToCart = async () => {
     console.log("Adding product to cart:", product);
@@ -36,7 +36,7 @@ const ProductCard = ({ product }) => {
     <div className="border p-4 rounded-xl shadow-lg bg-white hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full relative group">
       {/* Product image with better loading and error handling */}
       <div className="relative w-full h-60 mb-4 rounded-lg overflow-hidden bg-gray-50">
-        <Link href={`/product/${product.id}`}>
+        <Link href={`/product/${product._id}`}>
         <div className="h-48 w-full flex items-center justify-center"> {/* Fixed-size container */}
   <img
     src={product.image}
@@ -73,33 +73,49 @@ const ProductCard = ({ product }) => {
       </div>
 
       {/* Add to cart button */}
-      <button
-        onClick={handleAddToCart}
-        disabled={isInCart || isLoading}
-        className={`w-full py-2 cursor-pointer rounded-lg transition-all duration-200 text-white mt-4 flex items-center justify-center gap-2 ${
-          isInCart
-            ? "bg-green-500 cursor-not-allowed"
-            : "bg-cyan-500 hover:bg-cyan-600 active:scale-95"
-        } ${isLoading ? "opacity-80" : ""}`}
-        aria-label={isInCart ? "Item in cart" : "Add to cart"}
-      >
-        {isLoading ? (
-          <>
-            <Loader2 className="w-4 h-4 animate-spin" />
-            Adding...
-          </>
-        ) : isInCart ? (
-          <>
-            <CheckCircle className="w-4 h-4" />
-            Added
-          </>
-        ) : (
-          <>
-            <ShoppingCart className="w-4 h-4" />
-            Add to Cart
-          </>
-        )}
-      </button>
+    <button
+  onClick={handleAddToCart}
+  disabled={isInCart || isLoading || product?.stock <= 0}
+  className={`w-full py-2 cursor-pointer rounded-lg transition-all duration-200 text-white mt-4 flex items-center justify-center gap-2
+    ${
+      product?.stock <= 0
+        ? "bg-gray-400 cursor-not-allowed"
+        : isInCart
+        ? "bg-green-500 cursor-not-allowed"
+        : "bg-cyan-500 hover:bg-cyan-600 active:scale-95"
+    }
+    ${isLoading ? "opacity-80" : ""}
+  `}
+  aria-label={
+    product?.stock <= 0
+      ? "Out of stock"
+      : isInCart
+      ? "Item in cart"
+      : "Add to cart"
+  }
+>
+  {product?.stock <= 0 ? (
+    <>
+      <span>Out of Stock</span>
+    </>
+  ) : isLoading ? (
+    <>
+      <Loader2 className="w-4 h-4 animate-spin" />
+      Adding...
+    </>
+  ) : isInCart ? (
+    <>
+      <CheckCircle className="w-4 h-4" />
+      Added
+    </>
+  ) : (
+    <>
+      <ShoppingCart className="w-4 h-4" />
+      Add to Cart
+    </>
+  )}
+</button>
+
 
       {/* Optional badge for special items */}
       {product.isNew && (
@@ -107,11 +123,11 @@ const ProductCard = ({ product }) => {
           New
         </span>
       )}
-      {product.discount && (
+      {product.discount ? (
         <span className="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-2 h-8  w-8 text-center flex justify-center items-center rounded-full">
           -{product.discount}%
         </span>
-      )}
+      ) : ""}
     </div>
   );
 };

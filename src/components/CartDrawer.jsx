@@ -33,17 +33,19 @@ export default function CartDrawer({ isOpen, onClose }) {
       ) : (
         <ul className="space-y-4">
           {cart.map(item => (
-            <li key={item.id} className="flex justify-between items-center border-b pb-2">
-              <div className='w-12 h-12'>
+            <li key={item._id} className="flex justify-between items-center border-b pb-2">
+             <div className='flex justify-start items-start gap-3'>
+               <div className='w-12 h-12'>
                 <img className='object-contain' src={item.image}/>
               </div>
               <div>
                 <p className="font-semibold">{item.name}</p>
                 <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
               </div>
+             </div>
               <button
                 className="text-red-500 hover:rotate-60 transition transform ease-in-out cursor-pointer text-sm"
-                onClick={() => removeFromCart(item.id)}
+                onClick={() => removeFromCart(item._id)}
               >
                 <Trash2/>
               </button>
